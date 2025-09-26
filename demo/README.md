@@ -24,7 +24,7 @@ demo/
 
 ## 技術規格
 
-- Java 版本: 17
+- Java 版本: 21
 - Spring Boot 版本: 3.x
 - 建置工具: Maven
 

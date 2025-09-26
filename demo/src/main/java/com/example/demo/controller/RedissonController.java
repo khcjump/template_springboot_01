@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/redis")
 public class RedissonController {
@@ -25,16 +23,6 @@ public class RedissonController {
   public String getValue(@RequestParam String key) {
     try {
       return redissonMMService.getValue(key);
-    }catch (Exception e){
-      logger.error("getFindMap error", e);
-      return null;
-    }
-  }
-
-  @GetMapping("/getFindMap")
-  public Map<String, String> getFindMap() {
-    try {
-      return redissonMMService.getFindMap();
     } catch (Exception e) {
       logger.error("getFindMap error", e);
       return null;

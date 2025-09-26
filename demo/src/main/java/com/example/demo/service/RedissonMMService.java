@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class RedissonMMService {
@@ -38,20 +37,4 @@ public class RedissonMMService {
     }
   }
 
-  public Map<String, String> getFindMap() {
-    Map<String, String> result = new HashMap<>();
-    redissonClient.getKeys().getKeysByPattern("k*").iterator().forEachRemaining(x -> {
-      // 使用 StringCodec 读取实际值；注意：如果该 key 是旧的 Kryo 序列化数据，会读失败或乱码
-      RBucket<String> bucket = redissonClient.getBucket(x, StringCodec.INSTANCE);
-      String value = null;
-      try {
-        value = bucket.get();
-      } catch (RuntimeException ex) {
-        // 兼容处理：如果旧数据无法按 String 解码，填入占位信息，避免整个查询失败
-        value = "[unreadable-with-StringCodec]";
-      }
-      result.put(x, value);
-    });
-    return result;
-  }
 }
